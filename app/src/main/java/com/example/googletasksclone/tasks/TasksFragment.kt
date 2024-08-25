@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.googletasksclone.addtask.AddTasksFragment
 import com.example.googletasksclone.databinding.FragmentTasksBinding
 
 class TasksFragment : Fragment() {
@@ -20,10 +19,7 @@ class TasksFragment : Fragment() {
     private val viewModel: TasksViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.addTasksButton.setOnClickListener {
-            val modalBottomSheet = AddTasksFragment()
-            modalBottomSheet.show(parentFragmentManager, AddTasksFragment::class.java.simpleName)
-        }
+
     }
 
     override fun onCreateView(
