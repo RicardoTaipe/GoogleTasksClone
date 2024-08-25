@@ -46,4 +46,7 @@
     <string name="switch_task_lists">Switch task lists</string>
     <string name="change_sort_order">Change sort order</string>
     <string name="more_options">More options</string>
+    <string name="create_new_list">Create new list</string>
+    <string name="done">Done</string>
+    <string name="enter_list_title_hint">Enter list title</string>
 </resources>
