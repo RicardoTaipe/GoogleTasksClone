@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/accelerator"
+        android:contentDescription="@string/switch_task_lists"
+        android:title="@string/switch_task_lists"
+        android:icon="@drawable/ic_list_24"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/rotation"
+        android:contentDescription="@string/change_sort_order"
+        android:title="@string/change_sort_order"
+        android:icon="@drawable/ic_swap_24"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/dashboard"
+        android:contentDescription="@string/more_options"
+        android:title="@string/more_options"
+        android:icon="@drawable/ic_more_24"
+        app:showAsAction="ifRoom" />
+</menu>
