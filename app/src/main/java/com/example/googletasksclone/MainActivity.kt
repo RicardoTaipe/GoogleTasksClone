@@ -10,6 +10,7 @@ import com.example.googletasksclone.addtask.AddTasksFragment
 import com.example.googletasksclone.databinding.ActivityMainBinding
 import com.example.googletasksclone.home.TasksCollectionAdapter
 import com.example.googletasksclone.newlist.NewListFragment
+import com.example.googletasksclone.switchlist.SwitchListFragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -23,7 +24,6 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(binding.toolbar)
 
 //        val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -33,9 +33,16 @@ class MainActivity : AppCompatActivity() {
 //        binding.fab.setOnClickListener { view ->
 //
 //        }
-        tasksCollectionAdapter = TasksCollectionAdapter(this)
-        binding.contentMain.tasksLists.adapter = tasksCollectionAdapter
+        tasksCollectionAdapter = TasksCollectionAdapter(this).also {
+            binding.contentMain.tasksLists.adapter = it
+        }
+        renderTitlesInTabLayout()
+        handleCustomTabAction()
+        handleBottomBarActions()
+        navigateToAddTasksFragment()
+    }
 
+    private fun renderTitlesInTabLayout() {
         TabLayoutMediator(
             binding.contentMain.tabLayout, binding.contentMain.tasksLists
         ) { tab, position ->
@@ -49,19 +56,40 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }.attach()
+    }
 
-
+    private fun handleCustomTabAction() {
         binding.contentMain.tabLayout.apply {
-            addCustomTab("+ New List")
+            addCustomTab(getString(R.string.new_list))
             setOnCustomTabSelectedListener {
                 navigateToNewListFragment()
                 Snackbar.make(binding.root, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null)
-                    .setAnchorView(binding.addTasksButton).show()
+                    .setAction("Action", null).setAnchorView(binding.addTasksButton).show()
             }
         }
+    }
 
-        navigateToAddTasksFragment()
+    private fun handleBottomBarActions() {
+        binding.bottomAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.switch_lists -> {
+                    SwitchListFragment().show(supportFragmentManager, SwitchListFragment.TAG)
+                    true
+                }
+
+                R.id.sort_tasks -> {
+                    SwitchListFragment().show(supportFragmentManager, SwitchListFragment.TAG)
+                    true
+                }
+
+                R.id.more_options -> {
+                    SwitchListFragment().show(supportFragmentManager, SwitchListFragment.TAG)
+                    true
+                }
+
+                else -> false
+            }
+        }
     }
 
     private fun navigateToAddTasksFragment() {
