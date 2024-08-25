@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.example.googletasksclone.FirstFragment"
+        android:name="com.example.googletasksclone.tasks.TasksFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
 
