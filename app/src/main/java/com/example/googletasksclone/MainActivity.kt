@@ -1,17 +1,16 @@
 package com.example.googletasksclone
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.navigation.ui.AppBarConfiguration
 import com.example.googletasksclone.addtask.AddTasksFragment
 import com.example.googletasksclone.databinding.ActivityMainBinding
 import com.example.googletasksclone.home.TasksCollectionAdapter
+import com.example.googletasksclone.newlist.NewListFragment
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
@@ -32,26 +31,48 @@ class MainActivity : AppCompatActivity() {
 //        setupActionBarWithNavController(navController, appBarConfiguration)
 
 //        binding.fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null)
-//                .setAnchorView(R.id.fab).show()
+//
 //        }
         tasksCollectionAdapter = TasksCollectionAdapter(this)
         binding.contentMain.tasksLists.adapter = tasksCollectionAdapter
 
         TabLayoutMediator(
-            binding.contentMain.tabLayout,
-            binding.contentMain.tasksLists
+            binding.contentMain.tabLayout, binding.contentMain.tasksLists
         ) { tab, position ->
-            tab.text = "OBJECT ${(position + 1)}"
+            when (position) {
+                0 -> {
+                    tab.icon = ContextCompat.getDrawable(this, R.drawable.ic_star_24)
+                }
+
+                else -> {
+                    tab.text = "LIST ${(position)}"
+                }
+            }
         }.attach()
 
+
+        binding.contentMain.tabLayout.apply {
+            addCustomTab("+ New List")
+            setOnCustomTabSelectedListener {
+                navigateToNewListFragment()
+                Snackbar.make(binding.root, "Replace with your own action", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null)
+                    .setAnchorView(binding.addTasksButton).show()
+            }
+        }
+
+        navigateToAddTasksFragment()
+    }
+
+    private fun navigateToAddTasksFragment() {
         binding.addTasksButton.setOnClickListener {
-            val modalBottomSheet = AddTasksFragment()
-            modalBottomSheet.show(supportFragmentManager, AddTasksFragment::class.java.simpleName)
+            AddTasksFragment().show(supportFragmentManager, AddTasksFragment::class.java.simpleName)
         }
     }
 
+    private fun navigateToNewListFragment() {//TODO replace qith navgraph
+        NewListFragment().show(supportFragmentManager, NewListFragment::class.java.simpleName)
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -68,6 +89,7 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 
 //    override fun onSupportNavigateUp(): Boolean {
 //        val navController = findNavController(R.id.nav_host_fragment_content_main)
