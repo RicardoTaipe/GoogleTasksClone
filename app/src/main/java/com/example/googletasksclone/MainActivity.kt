@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToNewListFragment() {//TODO replace qith navgraph
+    private fun navigateToNewListFragment() {
         NewListFragment().show(supportFragmentManager, NewListFragment::class.java.simpleName)
     }
 

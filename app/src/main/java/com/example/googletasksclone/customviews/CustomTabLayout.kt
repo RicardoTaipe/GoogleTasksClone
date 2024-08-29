@@ -1,4 +1,4 @@
-package com.example.googletasksclone.common
+package com.example.googletasksclone.customviews
 
 import android.content.Context
 import android.util.AttributeSet

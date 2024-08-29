@@ -30,7 +30,8 @@ class NewListFragment : BottomSheetDialogFragment() {
         return (super.onCreateDialog(savedInstanceState) as BottomSheetDialog).apply {
             setOnShowListener { dialog ->
                 val bottomSheetDialog = dialog as BottomSheetDialog
-                val bottomSheet = bottomSheetDialog.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
+                val bottomSheet =
+                    bottomSheetDialog.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
                 bottomSheet?.let {
                     BottomSheetBehavior.from(it).apply {
                         state = BottomSheetBehavior.STATE_EXPANDED
@@ -47,5 +48,9 @@ class NewListFragment : BottomSheetDialogFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        val TAG = NewListFragment::class.java.simpleName
     }
 }
