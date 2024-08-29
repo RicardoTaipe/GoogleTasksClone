@@ -1,51 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".switchlist.SwitchListFragment">
 
-    <TextView
+    <include
         android:id="@+id/starred_list"
-        app:drawableStartCompat="@drawable/ic_star_outline_24"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawablePadding="8dp"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:text="@string/starred" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/md_theme_onSurfaceVariant" />
-    <!-- TODO: Replace with recyclerview and update color in left drawables -->
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:drawableStartCompat="@drawable/ic_check_24"
-        android:drawablePadding="8dp"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:text="Default list" />
+        layout="@layout/list_item_layout" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/md_theme_onSurfaceVariant" />
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lists_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="3"
+        tools:listitem="@layout/list_item_layout" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/md_theme_onSurfaceVariant" />
+
+    <include
         android:id="@+id/new_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawablePadding="8dp"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:text="@string/create_new_list"
-        app:drawableStartCompat="@drawable/ic_add_24" />
-
+        layout="@layout/list_item_layout" />
 </LinearLayout>

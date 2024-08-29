@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.switch_lists -> {
-                    SwitchListFragment().show(supportFragmentManager, SwitchListFragment.TAG)
+                    navigateToSwitchListsFragment()
                     true
                 }
 
@@ -88,6 +88,15 @@ class MainActivity : AppCompatActivity() {
 
                 else -> false
             }
+        }
+    }
+
+    private fun navigateToSwitchListsFragment() {
+        SwitchListFragment().apply {
+            onListItemSelected = { listId ->
+                binding.contentMain.tasksLists.setCurrentItem(listId.toInt(), false)
+            }
+            show(supportFragmentManager, SwitchListFragment.TAG)
         }
     }
 

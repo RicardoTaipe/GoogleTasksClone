@@ -4,17 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+import androidx.fragment.app.viewModels
+import com.example.googletasksclone.R
 import com.example.googletasksclone.databinding.FragmentSwitchListBinding
+import com.example.googletasksclone.databinding.ListItemLayoutBinding
 import com.example.googletasksclone.newlist.NewListFragment
+import com.example.googletasksclone.starred.ListsAdapter
+import com.example.googletasksclone.starred.SwitchListsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class SwitchListFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentSwitchListBinding? = null
     private val binding get() = _binding!!
+    var onListItemSelected: ((id: String) -> Unit)? = null
+    private lateinit var listsAdapter: ListsAdapter
+
+    private val viewModel by viewModels<SwitchListsViewModel>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSwitchListBinding.inflate(inflater, container, false)
         return binding.root
@@ -22,19 +32,41 @@ class SwitchListFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpItem(binding.starredList, R.drawable.ic_star_outline_24, R.string.starred)
+        setUpItem(binding.newList, R.drawable.ic_add_24, R.string.create_new_list)
 
         binding.run {
-            starredList.setOnClickListener {
-                //TODO add listener to the activity
-
+            starredList.root.setOnClickListener {
+                //TODO active the selected item on any lists
+                onListItemSelected?.invoke("0")
+                dismiss()
             }
-            newList.setOnClickListener {
+            newList.root.setOnClickListener {
                 navigateToNewListFragment()
             }
+        }
+        listsAdapter = ListsAdapter()
+        binding.listsRecyclerview.adapter = listsAdapter
+        observeListModel()
+    }
+
+    private fun setUpItem(
+        view: ListItemLayoutBinding, @DrawableRes iconDrawable: Int, @StringRes text: Int
+    ) {
+        view.apply {
+            icon.setImageResource(iconDrawable)
+            title.setText(text)
+        }
+    }
+
+    private fun observeListModel() {
+        viewModel.items.observe(viewLifecycleOwner) {
+            listsAdapter.submitList(it)
         }
     }
 
     private fun navigateToNewListFragment() {
+        dismiss()
         NewListFragment().show(parentFragmentManager, NewListFragment.TAG)
     }
 
