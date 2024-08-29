@@ -7,11 +7,16 @@ import android.view.ViewGroup
 import com.example.googletasksclone.databinding.FragmentMoreOptionsBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
+sealed interface MoreOptionsEvent {
+    data object RenameList : MoreOptionsEvent
+    data object DeleteList : MoreOptionsEvent
+    data object DeleteAllCompletedTasks : MoreOptionsEvent
+}
 
 class MoreOptionsFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentMoreOptionsBinding? = null
     private val binding get() = _binding!!
-    var onListItemSelected: (() -> Unit)? = null
+    var onListItemSelected: ((event: MoreOptionsEvent) -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -25,13 +30,13 @@ class MoreOptionsFragment : BottomSheetDialogFragment() {
 
         binding.run {
             renameList.setOnClickListener {
-
+                onListItemSelected?.invoke(MoreOptionsEvent.RenameList)
             }
             deleteList.setOnClickListener {
-
+                onListItemSelected?.invoke(MoreOptionsEvent.DeleteList)
             }
             deleteCompletedTasks.setOnClickListener {
-
+                onListItemSelected?.invoke(MoreOptionsEvent.DeleteAllCompletedTasks)
             }
         }
     }

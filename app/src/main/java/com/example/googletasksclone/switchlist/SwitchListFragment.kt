@@ -11,14 +11,16 @@ import com.example.googletasksclone.R
 import com.example.googletasksclone.databinding.FragmentSwitchListBinding
 import com.example.googletasksclone.databinding.ListItemLayoutBinding
 import com.example.googletasksclone.newlist.NewListFragment
-import com.example.googletasksclone.starred.ListsAdapter
-import com.example.googletasksclone.starred.SwitchListsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+
+sealed interface SwitchEvent {
+    data class ItemSelected(val id: String) : SwitchEvent
+}
 
 class SwitchListFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentSwitchListBinding? = null
     private val binding get() = _binding!!
-    var onListItemSelected: ((id: String) -> Unit)? = null
+    var onListItemSelected: ((event: SwitchEvent) -> Unit)? = null
     private lateinit var listsAdapter: ListsAdapter
 
     private val viewModel by viewModels<SwitchListsViewModel>()
@@ -38,7 +40,7 @@ class SwitchListFragment : BottomSheetDialogFragment() {
         binding.run {
             starredList.root.setOnClickListener {
                 //TODO active the selected item on any lists
-                onListItemSelected?.invoke("0")
+                onListItemSelected?.invoke(SwitchEvent.ItemSelected("0"))
                 dismiss()
             }
             newList.root.setOnClickListener {
@@ -46,6 +48,7 @@ class SwitchListFragment : BottomSheetDialogFragment() {
             }
         }
         listsAdapter = ListsAdapter()
+        listsAdapter.onListItemSelected = onListItemSelected
         binding.listsRecyclerview.adapter = listsAdapter
         observeListModel()
     }

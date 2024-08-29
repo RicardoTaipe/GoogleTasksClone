@@ -1,4 +1,4 @@
-package com.example.googletasksclone.starred
+package com.example.googletasksclone.switchlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

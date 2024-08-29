@@ -9,10 +9,12 @@ import androidx.navigation.ui.AppBarConfiguration
 import com.example.googletasksclone.addtask.AddTasksFragment
 import com.example.googletasksclone.databinding.ActivityMainBinding
 import com.example.googletasksclone.home.TasksCollectionAdapter
+import com.example.googletasksclone.moreoptions.MoreOptionsEvent
 import com.example.googletasksclone.moreoptions.MoreOptionsFragment
 import com.example.googletasksclone.newlist.NewListFragment
 import com.example.googletasksclone.sort.SortEvent
 import com.example.googletasksclone.sort.SortFragment
+import com.example.googletasksclone.switchlist.SwitchEvent
 import com.example.googletasksclone.switchlist.SwitchListFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -111,6 +113,11 @@ class MainActivity : AppCompatActivity() {
     private fun navigateToMoreOptionsDialog() {
         MoreOptionsFragment().apply {
             onListItemSelected = {
+                when (it) {
+                    MoreOptionsEvent.DeleteAllCompletedTasks -> {}
+                    MoreOptionsEvent.DeleteList -> {}
+                    MoreOptionsEvent.RenameList -> {}
+                }
 
             }
             show(supportFragmentManager, MoreOptionsFragment.TAG)
@@ -119,8 +126,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun navigateToSwitchListsFragment() {
         SwitchListFragment().apply {
-            onListItemSelected = { listId ->
-                binding.contentMain.tasksLists.setCurrentItem(listId.toInt(), false)
+            onListItemSelected = {
+                when (it) {
+                    is SwitchEvent.ItemSelected -> {
+                        binding.contentMain.tasksLists.setCurrentItem(it.id.toInt(), false)
+                        this.dismiss()
+                    }
+                }
             }
             show(supportFragmentManager, SwitchListFragment.TAG)
         }
