@@ -12,4 +12,8 @@
     <string name="delete_all_completed_tasks">Delete all completed tasks</string>
     <string name="delete_list">Delete list</string>
     <string name="rename_list">Rename list</string>
+    <string name="sort_by">Sort by</string>
+    <string name="my_order">My order</string>
+    <string name="date">Date</string>
+    <string name="starred_recently">Starred recently</string>
 </resources>

@@ -11,6 +11,8 @@ import com.example.googletasksclone.databinding.ActivityMainBinding
 import com.example.googletasksclone.home.TasksCollectionAdapter
 import com.example.googletasksclone.moreoptions.MoreOptionsFragment
 import com.example.googletasksclone.newlist.NewListFragment
+import com.example.googletasksclone.sort.SortEvent
+import com.example.googletasksclone.sort.SortFragment
 import com.example.googletasksclone.switchlist.SwitchListFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -78,7 +80,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.sort_tasks -> {
-                    SwitchListFragment().show(supportFragmentManager, SwitchListFragment.TAG)
+                    navigateToSortFragment()
                     true
                 }
 
@@ -89,6 +91,20 @@ class MainActivity : AppCompatActivity() {
 
                 else -> false
             }
+        }
+    }
+
+    private fun navigateToSortFragment() {
+        SortFragment().apply {
+            onListItemSelected = {
+                when (it) {
+                    SortEvent.Date -> {}
+                    SortEvent.MyOrder -> {}
+                    SortEvent.Starred -> {}
+                }
+
+            }
+            show(supportFragmentManager, SortFragment.TAG)
         }
     }
 
