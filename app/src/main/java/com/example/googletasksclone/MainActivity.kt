@@ -9,6 +9,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import com.example.googletasksclone.addtask.AddTasksFragment
 import com.example.googletasksclone.databinding.ActivityMainBinding
 import com.example.googletasksclone.home.TasksCollectionAdapter
+import com.example.googletasksclone.moreoptions.MoreOptionsFragment
 import com.example.googletasksclone.newlist.NewListFragment
 import com.example.googletasksclone.switchlist.SwitchListFragment
 import com.google.android.material.tabs.TabLayoutMediator
@@ -82,12 +83,21 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.more_options -> {
-                    SwitchListFragment().show(supportFragmentManager, SwitchListFragment.TAG)
+                    navigateToMoreOptionsDialog()
                     true
                 }
 
                 else -> false
             }
+        }
+    }
+
+    private fun navigateToMoreOptionsDialog() {
+        MoreOptionsFragment().apply {
+            onListItemSelected = {
+
+            }
+            show(supportFragmentManager, MoreOptionsFragment.TAG)
         }
     }
 
