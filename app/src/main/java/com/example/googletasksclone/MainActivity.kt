@@ -140,12 +140,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun navigateToAddTasksFragment() {
         binding.addTasksButton.setOnClickListener {
-            AddTasksFragment().show(supportFragmentManager, AddTasksFragment::class.java.simpleName)
+            AddTasksFragment().show(supportFragmentManager, AddTasksFragment.TAG)
         }
     }
 
     private fun navigateToNewListFragment() {
-        NewListFragment().show(supportFragmentManager, NewListFragment::class.java.simpleName)
+        NewListFragment().show(supportFragmentManager, NewListFragment.TAG)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

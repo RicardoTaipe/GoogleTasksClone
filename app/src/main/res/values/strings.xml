@@ -16,4 +16,7 @@
     <string name="my_order">My order</string>
     <string name="date">Date</string>
     <string name="starred_recently">Starred recently</string>
+    <string name="new_task">New task</string>
+    <string name="add_details">Add details</string>
+    <string name="save">Save</string>
 </resources>
