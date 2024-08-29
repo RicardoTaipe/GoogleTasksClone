@@ -11,7 +11,6 @@ import com.example.googletasksclone.databinding.ActivityMainBinding
 import com.example.googletasksclone.home.TasksCollectionAdapter
 import com.example.googletasksclone.newlist.NewListFragment
 import com.example.googletasksclone.switchlist.SwitchListFragment
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
@@ -63,8 +62,8 @@ class MainActivity : AppCompatActivity() {
             addCustomTab(getString(R.string.new_list))
             setOnCustomTabSelectedListener {
                 navigateToNewListFragment()
-                Snackbar.make(binding.root, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).setAnchorView(binding.addTasksButton).show()
+//                Snackbar.make(binding.root, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                    .setAction("Action", null).setAnchorView(binding.addTasksButton).show()
             }
         }
     }

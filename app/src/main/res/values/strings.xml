@@ -50,4 +50,5 @@
     <string name="done">Done</string>
     <string name="enter_list_title_hint">Enter list title</string>
     <string name="new_list">+ New List</string>
+    <string name="starred">Starred</string>
 </resources>
