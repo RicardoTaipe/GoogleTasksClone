@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import com.example.googletasksclone.R
 import com.example.googletasksclone.databinding.FragmentSwitchListBinding
 import com.example.googletasksclone.databinding.ListItemLayoutBinding
-import com.example.googletasksclone.newlist.NewListFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 sealed interface SwitchEvent {
@@ -70,7 +69,7 @@ class SwitchListFragment : BottomSheetDialogFragment() {
 
     private fun navigateToNewListFragment() {
         dismiss()
-        NewListFragment().show(parentFragmentManager, NewListFragment.TAG)
+        //NewListFragment().show(parentFragmentManager, NewListFragment.TAG)
     }
 
     override fun onDestroyView() {
