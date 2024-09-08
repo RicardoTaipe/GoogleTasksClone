@@ -1,16 +1,22 @@
 package com.example.googletasksclone
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.googletasksclone.ui.theme.TasksAppTheme
+import com.example.googletasksclone.utils.ImagePainterUtil.resolvePainter
 
 class MainActivity : ComponentActivity() {
 
@@ -18,12 +24,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TasksAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
+                HomeScreen()
             }
         }
 
@@ -31,17 +32,45 @@ class MainActivity : ComponentActivity() {
 
 }
 
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!", modifier = modifier
-    )
+fun HomeScreen(modifier: Modifier = Modifier) {
+    Scaffold(bottomBar = {
+        BottomAppBar(actions = {
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    painter = resolvePainter(R.drawable.ic_list_24),
+                    contentDescription = stringResource(id = R.string.switch_task_lists)
+                )
+            }
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    painter = resolvePainter(R.drawable.ic_swap_24),
+                    contentDescription = stringResource(id = R.string.change_sort_order)
+                )
+            }
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    painter = resolvePainter(R.drawable.ic_more_24),
+                    contentDescription = stringResource(id = R.string.more_options)
+                )
+
+            }
+        }, floatingActionButton = {
+            FloatingActionButton(onClick = { /*TODO*/ }) {
+                Icon(Icons.Filled.Add, "Localized description")
+            }
+        })
+    }) {
+
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     TasksAppTheme {
-        Greeting("Android")
+        HomeScreen()
     }
 }
