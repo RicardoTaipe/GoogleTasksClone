@@ -39,7 +39,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewListScreen(onDismissBottomSheet: () -> Unit) {
-    val sheetState = rememberModalBottomSheetState()
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var listTitle by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
     ModalBottomSheet(
