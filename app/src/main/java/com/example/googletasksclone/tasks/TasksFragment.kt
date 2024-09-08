@@ -12,10 +12,6 @@ class TasksFragment : Fragment() {
     private var _binding: FragmentTasksBinding? = null
     private val binding get() = _binding!!
 
-    companion object {
-        fun newInstance() = TasksFragment()
-    }
-
     private val viewModel: TasksViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
