@@ -19,4 +19,8 @@
     <string name="new_task">New task</string>
     <string name="add_details">Add details</string>
     <string name="save">Save</string>
+    <string name="discard_current_task">Discard current task?</string>
+    <string name="discard_task_description">Are you sure you want that you want to discard the current draft?</string>
+    <string name="cancel">Cancel</string>
+    <string name="discard">Discard</string>
 </resources>
