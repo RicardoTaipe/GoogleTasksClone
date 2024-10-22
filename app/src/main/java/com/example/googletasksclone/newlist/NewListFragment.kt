@@ -84,6 +84,6 @@ class NewListFragment : BottomSheetDialogFragment() {
     }
 
     companion object {
-        val TAG = NewListFragment::class.java.simpleName
+        val TAG: String = NewListFragment::class.java.simpleName
     }
 }
