@@ -6,9 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.core.view.isInvisible
+import com.example.googletasksclone.PreferencesMock
 import com.example.googletasksclone.R
+import com.example.googletasksclone.customviews.ListItemView
 import com.example.googletasksclone.databinding.FragmentSortBinding
-import com.example.googletasksclone.databinding.ListItemLayoutBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
@@ -22,7 +23,7 @@ class SortFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentSortBinding? = null
     private val binding get() = _binding!!
     var onListItemSelected: ((event: SortEvent) -> Unit)? = null
-    private var selectedOption: SortEvent = SortEvent.MyOrder
+    private var selectedOption: SortEvent = PreferencesMock.order
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -33,26 +34,25 @@ class SortFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setUpItem(binding.myOrder, R.string.my_order, SortEvent.MyOrder)
-        setUpItem(binding.date, R.string.date, SortEvent.Date)
-        setUpItem(binding.starred, R.string.starred_recently, SortEvent.Starred)
+        setUpItem(binding.myOrder, SortEvent.MyOrder)
+        setUpItem(binding.date, SortEvent.Date)
+        setUpItem(binding.starred, SortEvent.Starred)
     }
 
     private fun setUpItem(
-        view: ListItemLayoutBinding,
-        @StringRes text: Int,
+        view: ListItemView,
         event: SortEvent,
     ) {
         view.apply {
-            title.setText(text)
-            root.setOnClickListener {
+            setOnClickListener = {
+                setIconVisibility(selectedOption == event)
                 onListItemSelected?.invoke(event)
                 selectedOption = event
+                PreferencesMock.order = event
                 dismiss()
             }
             //TODO active the right icon from preferences
-            icon.isInvisible = selectedOption !== event
+            setIconVisibility(selectedOption == event)
         }
     }
 

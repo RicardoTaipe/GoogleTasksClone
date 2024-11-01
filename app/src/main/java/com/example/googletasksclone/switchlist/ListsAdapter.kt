@@ -2,31 +2,44 @@ package com.example.googletasksclone.switchlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.googletasksclone.R
 import com.example.googletasksclone.data.ListModel
 import com.example.googletasksclone.databinding.ListItemLayoutBinding
 
+private const val FAVORITE_LIST_POSITION = 0
+
 class ListsAdapter : ListAdapter<ListModel, ListsAdapter.ViewHolder>(ListModelDiffCallback()) {
-    var onListItemSelected: ((event: SwitchEvent) -> Unit)? = null
+    var onListItemSelected: ((item: ListModel) -> Unit)? = null
+    var selectedItem: ListModel? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, onListItemSelected)
+        holder.bind(item, onListItemSelected, item == selectedItem)
     }
 
-    class ViewHolder private constructor(private val binding: ListItemLayoutBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor(private val binding: ListItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: ListModel, onListItemSelected: ((event: SwitchEvent) -> Unit)?) {
-            binding.root.setOnClickListener {
-                onListItemSelected?.invoke(SwitchEvent.ItemSelected(item.id))
+        fun bind(item: ListModel, onListItemSelected: ((item: ListModel) -> Unit)?, isSelected: Boolean) {
+            if (adapterPosition == FAVORITE_LIST_POSITION) {
+                binding.icon.isVisible = true
+                binding.icon.setImageResource(if (isSelected) R.drawable.ic_star_24 else R.drawable.ic_star_outline_24)
+                binding.title.setText(R.string.starred)
+            } else {
+                binding.icon.isInvisible = !isSelected
+                binding.title.text = item.title
             }
-            binding.title.text = item.title
+            binding.root.setOnClickListener {
+                onListItemSelected?.invoke(item)
+            }
         }
 
         companion object {

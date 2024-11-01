@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -19,16 +20,27 @@
         app:layout_constraintStart_toEndOf="@id/icon"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <include
+    <com.example.googletasksclone.customviews.ListItemView
         android:id="@+id/my_order"
-        layout="@layout/list_item_layout" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:iconVisibility="true"
+        app:titleText="@string/my_order" />
 
-    <include
+    <com.example.googletasksclone.customviews.ListItemView
         android:id="@+id/date"
-        layout="@layout/list_item_layout" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:iconVisibility="false"
+        app:titleText="@string/date"
+        tools:iconVisibility="true" />
 
-    <include
+    <com.example.googletasksclone.customviews.ListItemView
         android:id="@+id/starred"
-        layout="@layout/list_item_layout" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:iconVisibility="false"
+        app:titleText="@string/starred_recently"
+        tools:iconVisibility="true" />
 
 </LinearLayout>

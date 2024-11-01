@@ -24,4 +24,5 @@
     <string name="cancel">Cancel</string>
     <string name="discard">Discard</string>
     <string name="close_icon">close icon</string>
+    <string name="add_tasks">add tasks</string>
 </resources>

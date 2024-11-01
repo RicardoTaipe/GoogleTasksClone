@@ -6,6 +6,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.viewpager2.widget.ViewPager2
 import com.example.googletasksclone.addtask.AddTasksFragment
 import com.example.googletasksclone.databinding.ActivityMainBinding
 import com.example.googletasksclone.home.TasksCollectionAdapter
@@ -44,6 +45,12 @@ class MainActivity : AppCompatActivity() {
         handleCustomTabAction()
         handleBottomBarActions()
         navigateToAddTasksFragment()
+        binding.contentMain.tasksLists.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                PreferencesMock.selectedList
+            }
+        })
     }
 
     private fun renderTitlesInTabLayout() {

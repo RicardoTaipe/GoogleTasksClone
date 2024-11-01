@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.example.googletasksclone.R
 import com.example.googletasksclone.databinding.FragmentSwitchListBinding
 import com.example.googletasksclone.databinding.ListItemLayoutBinding
+import com.example.googletasksclone.dpToPx
 import com.example.googletasksclone.newlist.NewListFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -34,30 +37,46 @@ class SwitchListFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpItem(binding.starredList, R.drawable.ic_star_outline_24, R.string.starred)
-        setUpItem(binding.newList, R.drawable.ic_add_24, R.string.create_new_list)
-
-        binding.run {
-            starredList.root.setOnClickListener {
-                //TODO active the selected item on any lists
-                onListItemSelected?.invoke(SwitchEvent.ItemSelected("0"))
-                dismiss()
-            }
-            newList.root.setOnClickListener {
-                navigateToNewListFragment()
-            }
-        }
-        listsAdapter = ListsAdapter()
-        listsAdapter.onListItemSelected = onListItemSelected
-        binding.listsRecyclerview.adapter = listsAdapter
+        //setUpItem(binding.newList, R.drawable.ic_add_24, R.string.create_new_list)
+        setUpNewListButton()
+        initializeAdapter()
+        setupRecyclerView()
         observeListModel()
+    }
+
+    private fun initializeAdapter() {
+        listsAdapter = ListsAdapter()
+        listsAdapter.onListItemSelected = { item ->
+            viewModel.selectItem(item)
+            onListItemSelected?.invoke(SwitchEvent.ItemSelected(item.id))
+            listsAdapter.notifyItemChanged(listsAdapter.currentList.indexOfFirst { model -> model.id == item.id })
+        }
+        viewModel.selectedItem.observe(viewLifecycleOwner) {
+            listsAdapter.selectedItem = it
+        }
+    }
+
+    private fun setUpNewListButton() {
+        binding.newList.setOnClickListener = {
+            navigateToNewListFragment()
+        }
+    }
+
+    private fun setupRecyclerView() {
+        binding.listsRecyclerview.adapter = listsAdapter
+        val dividerHeight = requireContext().dpToPx(1)
+        val color = ContextCompat.getColor(requireContext(), R.color.md_theme_onSurfaceVariant)
+        binding.listsRecyclerview.addItemDecoration(DividerItemDecoration(dividerHeight, color))
     }
 
     private fun setUpItem(
         view: ListItemLayoutBinding, @DrawableRes iconDrawable: Int, @StringRes text: Int
     ) {
-        view.apply {
-            icon.setImageResource(iconDrawable)
+        view.run {
+            icon.run {
+                setImageResource(iconDrawable)
+                isVisible = true
+            }
             title.setText(text)
         }
     }

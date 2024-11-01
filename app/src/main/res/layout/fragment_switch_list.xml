@@ -3,18 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".switchlist.SwitchListFragment">
-
-    <include
-        android:id="@+id/starred_list"
-        layout="@layout/list_item_layout" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/md_theme_onSurfaceVariant" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lists_recyclerview"
@@ -25,12 +16,11 @@
         tools:itemCount="3"
         tools:listitem="@layout/list_item_layout" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/md_theme_onSurfaceVariant" />
-
-    <include
+    <com.example.googletasksclone.customviews.ListItemView
         android:id="@+id/new_list"
-        layout="@layout/list_item_layout" />
+        app:iconSrc="@drawable/ic_add_24"
+        app:titleText="@string/create_new_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>
