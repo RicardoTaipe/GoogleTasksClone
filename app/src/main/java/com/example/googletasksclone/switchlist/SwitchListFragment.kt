@@ -37,7 +37,6 @@ class SwitchListFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //setUpItem(binding.newList, R.drawable.ic_add_24, R.string.create_new_list)
         setUpNewListButton()
         initializeAdapter()
         setupRecyclerView()
@@ -67,18 +66,6 @@ class SwitchListFragment : BottomSheetDialogFragment() {
         val dividerHeight = requireContext().dpToPx(1)
         val color = ContextCompat.getColor(requireContext(), R.color.md_theme_onSurfaceVariant)
         binding.listsRecyclerview.addItemDecoration(DividerItemDecoration(dividerHeight, color))
-    }
-
-    private fun setUpItem(
-        view: ListItemLayoutBinding, @DrawableRes iconDrawable: Int, @StringRes text: Int
-    ) {
-        view.run {
-            icon.run {
-                setImageResource(iconDrawable)
-                isVisible = true
-            }
-            title.setText(text)
-        }
     }
 
     private fun observeListModel() {
