@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.StringRes
-import androidx.core.view.isInvisible
 import com.example.googletasksclone.PreferencesMock
-import com.example.googletasksclone.R
 import com.example.googletasksclone.customviews.ListItemView
 import com.example.googletasksclone.databinding.FragmentSortBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -45,9 +42,7 @@ class SortFragment : BottomSheetDialogFragment() {
     ) {
         view.apply {
             setOnClickListener = {
-                setIconVisibility(selectedOption == event)
                 onListItemSelected?.invoke(event)
-                selectedOption = event
                 PreferencesMock.order = event
                 dismiss()
             }

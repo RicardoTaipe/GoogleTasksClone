@@ -5,6 +5,8 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.googletasksclone.R
 import com.example.googletasksclone.databinding.ListItemLayoutBinding
@@ -75,8 +77,16 @@ class ListItemView : ConstraintLayout {
         binding.icon.setImageDrawable(drawable)
     }
 
+    fun setIcon(@DrawableRes drawableId: Int) {
+        binding.icon.setImageResource(drawableId)
+    }
+
     fun setTitle(text: String) {
         binding.title.text = text
+    }
+
+    fun setTitle(@StringRes resid: Int) {
+        binding.title.setText(resid)
     }
 
     fun setIconVisibility(condition: Boolean) {
