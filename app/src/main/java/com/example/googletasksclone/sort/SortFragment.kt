@@ -4,55 +4,53 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.StringRes
-import androidx.core.view.isInvisible
-import com.example.googletasksclone.R
+import androidx.fragment.app.viewModels
+import com.example.googletasksclone.customviews.ListItemView
+import com.example.googletasksclone.data.preferences.SortOrder
 import com.example.googletasksclone.databinding.FragmentSortBinding
-import com.example.googletasksclone.databinding.ListItemLayoutBinding
+import com.example.googletasksclone.utils.ViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-
-
-sealed interface SortEvent {
-    data object MyOrder : SortEvent
-    data object Date : SortEvent
-    data object Starred : SortEvent
-}
 
 class SortFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentSortBinding? = null
     private val binding get() = _binding!!
-    var onListItemSelected: ((event: SortEvent) -> Unit)? = null
-    private var selectedOption: SortEvent = SortEvent.MyOrder
+    private val viewModel by viewModels<SortViewModel> { ViewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSortBinding.inflate(inflater, container, false)
-        return binding.root
+        return FragmentSortBinding.inflate(inflater, container, false).run {
+            _binding = this
+            root
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Set up items in a loop
+        val sortItems = listOf(
+            binding.myOrder to SortOrder.BY_MY_ORDER,
+            binding.date to SortOrder.BY_DATE,
+            binding.starred to SortOrder.BY_STARRED
+        )
 
-        setUpItem(binding.myOrder, R.string.my_order, SortEvent.MyOrder)
-        setUpItem(binding.date, R.string.date, SortEvent.Date)
-        setUpItem(binding.starred, R.string.starred_recently, SortEvent.Starred)
+        sortItems.forEach { (itemView, sortOrder) ->
+            setUpItem(itemView, sortOrder)
+        }
+
+        viewModel.userPreferencesFlow.observe(viewLifecycleOwner) { userPreference ->
+            sortItems.forEach { (itemView, sortOrder) ->
+                itemView.setIconVisibility(sortOrder === userPreference.sortOrder)
+            }
+        }
     }
 
-    private fun setUpItem(
-        view: ListItemLayoutBinding,
-        @StringRes text: Int,
-        event: SortEvent,
-    ) {
+    private fun setUpItem(view: ListItemView, sortOrder: SortOrder) {
         view.apply {
-            title.setText(text)
-            root.setOnClickListener {
-                onListItemSelected?.invoke(event)
-                selectedOption = event
+            setOnClickListener = {
+                viewModel.setSortOption(sortOrder)
                 dismiss()
             }
-            //TODO active the right icon from preferences
-            icon.isInvisible = selectedOption !== event
         }
     }
 
