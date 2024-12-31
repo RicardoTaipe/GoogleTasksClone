@@ -13,7 +13,6 @@ import com.example.googletasksclone.home.TasksCollectionAdapter
 import com.example.googletasksclone.moreoptions.MoreOptionsEvent
 import com.example.googletasksclone.moreoptions.MoreOptionsFragment
 import com.example.googletasksclone.newlist.NewListFragment
-import com.example.googletasksclone.sort.SortEvent
 import com.example.googletasksclone.sort.SortFragment
 import com.example.googletasksclone.switchlist.SwitchEvent
 import com.example.googletasksclone.switchlist.SwitchListFragment
@@ -104,17 +103,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigateToSortFragment() {
-        SortFragment().apply {
-            onListItemSelected = {
-                when (it) {
-                    SortEvent.Date -> {}
-                    SortEvent.MyOrder -> {}
-                    SortEvent.Starred -> {}
-                }
-
-            }
-            show(supportFragmentManager, SortFragment.TAG)
-        }
+        // update list with order change from flow
+        SortFragment().show(supportFragmentManager, SortFragment.TAG)
     }
 
     private fun navigateToMoreOptionsDialog() {

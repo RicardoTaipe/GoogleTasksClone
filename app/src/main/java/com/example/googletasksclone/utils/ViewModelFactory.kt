@@ -12,16 +12,15 @@ import com.example.googletasksclone.sort.SortViewModel
  * Factory for all ViewModels.
  */
 @Suppress("UNCHECKED_CAST")
-val TodoViewModelFactory = object : ViewModelProvider.Factory {
+val ViewModelFactory = object : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T =
         with(modelClass) {
             val application = checkNotNull(extras[APPLICATION_KEY]) as GoogleTaskCloneApplication
-            //val tasksRepository = application.taskRepository
             when {
                 isAssignableFrom(NewListViewModel::class.java) ->
                     NewListViewModel()
                 isAssignableFrom(SortViewModel::class.java) ->
-                    SortViewModel()
+                    SortViewModel(application.userPreferencesRepository)
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
