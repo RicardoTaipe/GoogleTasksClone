@@ -20,7 +20,10 @@ class SwitchListFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentSwitchListBinding? = null
     private val binding get() = _binding!!
     var onListItemSelected: ((event: SwitchEvent) -> Unit)? = null
-    private lateinit var listsAdapter: ListsAdapter
+
+    private val listsAdapter: ListsAdapter by lazy {
+        ListsAdapter()
+    }
 
     private val viewModel by viewModels<SwitchListsViewModel>()
 
@@ -40,12 +43,12 @@ class SwitchListFragment : BottomSheetDialogFragment() {
     }
 
     private fun initializeAdapter() {
-        listsAdapter = ListsAdapter()
         listsAdapter.onListItemSelected = { item ->
             viewModel.selectItem(item)
             onListItemSelected?.invoke(SwitchEvent.ItemSelected(item.id))
             listsAdapter.notifyItemChanged(listsAdapter.currentList.indexOfFirst { model -> model.id == item.id })
         }
+
         viewModel.selectedItem.observe(viewLifecycleOwner) {
             listsAdapter.selectedItem = it
         }
