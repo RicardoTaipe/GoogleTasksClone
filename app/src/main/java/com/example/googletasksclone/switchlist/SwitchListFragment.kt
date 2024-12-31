@@ -4,15 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.example.googletasksclone.R
 import com.example.googletasksclone.databinding.FragmentSwitchListBinding
-import com.example.googletasksclone.databinding.ListItemLayoutBinding
-import com.example.googletasksclone.dpToPx
+import com.example.googletasksclone.utils.dpToPx
 import com.example.googletasksclone.newlist.NewListFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
