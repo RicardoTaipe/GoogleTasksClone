@@ -1,4 +1,4 @@
-package com.example.googletasksclone
+package com.example.googletasksclone.utils
 
 import android.content.Context
 
