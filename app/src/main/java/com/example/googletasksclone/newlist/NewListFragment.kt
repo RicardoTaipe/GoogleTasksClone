@@ -54,7 +54,7 @@ class NewListFragment : BottomSheetDialogFragment() {
     }
 
     private fun handleDoneAction() {
-        //TODO save new list to db
+        //TODO save new list to db and add viewmodel
         val title = binding.textField.editText?.text.toString().trim()
         dismiss()
     }
