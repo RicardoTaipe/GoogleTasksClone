@@ -12,10 +12,10 @@ import com.example.googletasksclone.databinding.ActivityMainBinding
 import com.example.googletasksclone.home.TasksCollectionAdapter
 import com.example.googletasksclone.moreoptions.MoreOptionsEvent
 import com.example.googletasksclone.moreoptions.MoreOptionsFragment
-import com.example.googletasksclone.newlist.NewListFragment
+import com.example.googletasksclone.newcategory.NewCategoryFragment
 import com.example.googletasksclone.sort.SortFragment
-import com.example.googletasksclone.switchlist.SwitchEvent
-import com.example.googletasksclone.switchlist.SwitchListFragment
+import com.example.googletasksclone.switchcategory.SwitchEvent
+import com.example.googletasksclone.switchcategory.SwitchCategoryFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigateToSwitchListsFragment() {
-        SwitchListFragment().apply {
+        SwitchCategoryFragment().apply {
             onListItemSelected = {
                 when (it) {
                     is SwitchEvent.ItemSelected -> {
@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-            show(supportFragmentManager, SwitchListFragment.TAG)
+            show(supportFragmentManager, SwitchCategoryFragment.TAG)
         }
     }
 
@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigateToNewListFragment() {
-        NewListFragment().show(supportFragmentManager, NewListFragment.TAG)
+        NewCategoryFragment().show(supportFragmentManager, NewCategoryFragment.TAG)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

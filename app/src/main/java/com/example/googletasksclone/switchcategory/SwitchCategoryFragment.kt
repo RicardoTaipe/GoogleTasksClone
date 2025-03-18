@@ -1,4 +1,4 @@
-package com.example.googletasksclone.switchlist
+package com.example.googletasksclone.switchcategory
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,14 +9,14 @@ import androidx.fragment.app.viewModels
 import com.example.googletasksclone.R
 import com.example.googletasksclone.databinding.FragmentSwitchListBinding
 import com.example.googletasksclone.utils.dpToPx
-import com.example.googletasksclone.newlist.NewListFragment
+import com.example.googletasksclone.newcategory.NewCategoryFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 sealed interface SwitchEvent {
     data class ItemSelected(val id: String) : SwitchEvent
 }
 
-class SwitchListFragment : BottomSheetDialogFragment() {
+class SwitchCategoryFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentSwitchListBinding? = null
     private val binding get() = _binding!!
     var onListItemSelected: ((event: SwitchEvent) -> Unit)? = null
@@ -25,7 +25,7 @@ class SwitchListFragment : BottomSheetDialogFragment() {
         ListsAdapter()
     }
 
-    private val viewModel by viewModels<SwitchListsViewModel>()
+    private val viewModel by viewModels<SwitchCategoryViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -75,7 +75,7 @@ class SwitchListFragment : BottomSheetDialogFragment() {
 
     private fun navigateToNewListFragment() {
         dismiss()
-        NewListFragment().show(parentFragmentManager, NewListFragment.TAG)
+        NewCategoryFragment().show(parentFragmentManager, NewCategoryFragment.TAG)
     }
 
     override fun onDestroyView() {

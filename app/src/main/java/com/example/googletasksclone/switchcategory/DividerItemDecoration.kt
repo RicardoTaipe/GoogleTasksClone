@@ -1,4 +1,4 @@
-package com.example.googletasksclone.switchlist
+package com.example.googletasksclone.switchcategory
 
 import android.graphics.Canvas
 import android.graphics.Paint

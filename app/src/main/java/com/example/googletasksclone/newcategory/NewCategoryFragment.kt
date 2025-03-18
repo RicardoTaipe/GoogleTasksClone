@@ -1,4 +1,4 @@
-package com.example.googletasksclone.newlist
+package com.example.googletasksclone.newcategory
 
 import android.app.Dialog
 import android.os.Bundle
@@ -14,7 +14,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class NewListFragment : BottomSheetDialogFragment() {
+class NewCategoryFragment : BottomSheetDialogFragment() {
 
     private var _binding: FragmentNewListBinding? = null
     private val binding get() = _binding!!
@@ -84,6 +84,6 @@ class NewListFragment : BottomSheetDialogFragment() {
     }
 
     companion object {
-        val TAG: String = NewListFragment::class.java.simpleName
+        val TAG: String = NewCategoryFragment::class.java.simpleName
     }
 }

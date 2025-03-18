@@ -1,4 +1,4 @@
-package com.example.googletasksclone.switchlist
+package com.example.googletasksclone.switchcategory
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.googletasksclone.PreferencesMock
 import com.example.googletasksclone.data.ListModel
 
-class SwitchListsViewModel : ViewModel() {
+class SwitchCategoryViewModel : ViewModel() {
     val items: LiveData<List<ListModel>> =
         MutableLiveData(List(3) { ListModel(it.toString(), "List $it") })
 
