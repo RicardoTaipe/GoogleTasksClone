@@ -88,4 +88,10 @@ interface TasksDao {
      */
     @Query("DELETE FROM Tasks WHERE completed = 1")
     suspend fun deleteCompletedTasks(): Int
+
+    @Query("SELECT * FROM tasks WHERE category_id = :categoryId")
+    suspend fun getTasksByCategory(categoryId: Long): List<Task>
+
+    @Query("SELECT * FROM tasks WHERE category_id = :categoryId")
+    suspend fun observeTasksByCategory(categoryId: Long): LiveData<List<Task>>
 }
