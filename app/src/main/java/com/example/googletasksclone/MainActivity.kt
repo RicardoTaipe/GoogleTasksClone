@@ -23,6 +23,7 @@ import com.example.googletasksclone.newlist.NewListScreen
 import com.example.googletasksclone.ui.theme.TasksAppTheme
 import com.example.googletasksclone.utils.ImagePainterUtil.resolvePainter
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
