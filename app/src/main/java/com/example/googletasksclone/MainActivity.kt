@@ -12,12 +12,14 @@ import com.example.googletasksclone.databinding.ActivityMainBinding
 import com.example.googletasksclone.home.TasksCollectionAdapter
 import com.example.googletasksclone.moreoptions.MoreOptionsEvent
 import com.example.googletasksclone.moreoptions.MoreOptionsFragment
-import com.example.googletasksclone.newcategory.NewCategoryFragment
+import com.example.googletasksclone.addeditcategory.AddEditCategoryFragment
 import com.example.googletasksclone.sort.SortFragment
 import com.example.googletasksclone.switchcategory.SwitchEvent
 import com.example.googletasksclone.switchcategory.SwitchCategoryFragment
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -72,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         binding.contentMain.tabLayout.apply {
             addCustomTab(getString(R.string.new_list))
             setOnCustomTabSelectedListener {
-                navigateToNewListFragment()
+                navigateToNewCategoryFragment()
 //                Snackbar.make(binding.root, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                    .setAction("Action", null).setAnchorView(binding.addTasksButton).show()
             }
@@ -113,7 +115,9 @@ class MainActivity : AppCompatActivity() {
                 when (it) {
                     MoreOptionsEvent.DeleteAllCompletedTasks -> {}
                     MoreOptionsEvent.DeleteList -> {}
-                    MoreOptionsEvent.RenameList -> {}
+                    MoreOptionsEvent.RenameList -> {
+                        navigateToNewCategoryFragment("ux")
+                    }
                 }
 
             }
@@ -141,8 +145,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToNewListFragment() {
-        NewCategoryFragment().show(supportFragmentManager, NewCategoryFragment.TAG)
+    private fun navigateToNewCategoryFragment(categoryId: String = "") {
+        AddEditCategoryFragment.newInstance(categoryId)
+            .show(supportFragmentManager, AddEditCategoryFragment.TAG)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
