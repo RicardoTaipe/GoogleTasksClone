@@ -6,13 +6,13 @@ import com.example.todoapp.data.Result
 import com.example.todoapp.data.Result.Error
 import com.example.todoapp.data.Result.Success
 import com.example.googletasksclone.data.Task
-import com.example.googletasksclone.data.source.local.TasksDao
 import com.example.todoapp.data.source.TasksDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class TasksLocalDataSource(
+class TasksLocalDataSource @Inject constructor(
     private val tasksDao: TasksDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TasksDataSource {

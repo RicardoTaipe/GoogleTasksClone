@@ -10,7 +10,7 @@ import java.util.*
     tableName = "tasks", foreignKeys = [
         ForeignKey(
             entity = Category::class,
-            parentColumns = ["id"],
+            parentColumns = ["category_id"],
             childColumns = ["category_id"],
             onDelete = ForeignKey.CASCADE
         )
@@ -20,7 +20,7 @@ data class Task(
     @ColumnInfo(name = "title") var title: String = "",
     @ColumnInfo(name = "description") var description: String = "",
     @ColumnInfo(name = "completed") var isCompleted: Boolean = false,
-    @PrimaryKey @ColumnInfo(name = "entry_id") var id: String = UUID.randomUUID().toString(),
+    @PrimaryKey @ColumnInfo(name = "task_id") var id: String = UUID.randomUUID().toString(),
     @ColumnInfo(name = "date") var date: Long = System.currentTimeMillis(),
     @ColumnInfo(name = "category_id") var categoryId: Long? = null
 ) {

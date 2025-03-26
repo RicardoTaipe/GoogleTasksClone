@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.googletasksclone.GoogleTaskCloneApplication
-import com.example.googletasksclone.newcategory.NewCategoryViewModel
+import com.example.googletasksclone.addeditcategory.AddEditCategoryViewModel
 import com.example.googletasksclone.sort.SortViewModel
 
 /**
@@ -17,8 +17,6 @@ val ViewModelFactory = object : ViewModelProvider.Factory {
         with(modelClass) {
             val application = checkNotNull(extras[APPLICATION_KEY]) as GoogleTaskCloneApplication
             when {
-                isAssignableFrom(NewCategoryViewModel::class.java) ->
-                    NewCategoryViewModel()
                 isAssignableFrom(SortViewModel::class.java) ->
                     SortViewModel(application.userPreferencesRepository)
                 else ->
