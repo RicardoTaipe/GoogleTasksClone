@@ -22,6 +22,8 @@ class AddTasksFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentAddTasksBinding? = null
     private val binding get() = _binding!!
     private lateinit var behavior: BottomSheetBehavior<FrameLayout>
+    private var isDialogShown = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -66,8 +68,11 @@ class AddTasksFragment : BottomSheetDialogFragment() {
 
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
                     if (slideOffset in 0f..0.5f) {
-                        behavior.state = BottomSheetBehavior.STATE_EXPANDED
-                        showDiscardConfirmationDialog()
+                        if (isDialogShown.not()){
+                            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                            showDiscardConfirmationDialog()
+                            isDialogShown = true
+                        }
                     }
                 }
             })
@@ -122,8 +127,11 @@ class AddTasksFragment : BottomSheetDialogFragment() {
                 .setMessage(R.string.discard_task_description)
                 .setCancelable(false)
                 .setPositiveButton(R.string.discard) { _, _ ->
+                    isDialogShown = false
                     dismiss()
-                }.setNegativeButton(R.string.cancel, null).show()
+                }.setNegativeButton(R.string.cancel){_, _ ->
+                    isDialogShown = false
+                }.show()
         } else {
             dismiss()
         }
