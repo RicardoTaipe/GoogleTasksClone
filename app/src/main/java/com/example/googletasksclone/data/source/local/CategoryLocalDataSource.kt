@@ -1,5 +1,7 @@
 package com.example.googletasksclone.data.source.local
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
 import com.example.googletasksclone.data.Category
 import com.example.todoapp.data.Result
 import com.example.todoapp.data.Result.Success
@@ -18,16 +20,23 @@ class CategoryLocalDataSource @Inject constructor(
         categoryDao.insertCategory(category)
     }
 
-    override suspend fun getCategory(categoryId: String): Result<Category> = withContext(ioDispatcher) {
-        try {
-            val category = categoryDao.getCategoryById(categoryId)
-            if (category != null) {
-                return@withContext Success(category)
-            } else {
-                return@withContext Error(Exception("Task not found!"))
+    override suspend fun getCategory(categoryId: String): Result<Category> =
+        withContext(ioDispatcher) {
+            try {
+                val category = categoryDao.getCategoryById(categoryId)
+                if (category != null) {
+                    return@withContext Success(category)
+                } else {
+                    return@withContext Error(Exception("Task not found!"))
+                }
+            } catch (e: Exception) {
+                return@withContext Error(e)
             }
-        } catch (e: Exception) {
-            return@withContext Error(e)
+        }
+
+    override fun observeCategories(): LiveData<Result<List<Category>>> {
+        return categoryDao.observeAllCategories().map {
+            Success(it)
         }
     }
 }

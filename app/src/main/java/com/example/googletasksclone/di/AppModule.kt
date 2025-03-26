@@ -3,10 +3,10 @@ package com.example.googletasksclone.di
 import android.content.Context
 import androidx.room.Room
 import com.example.googletasksclone.data.source.CategoryRepository
+import com.example.googletasksclone.data.source.DefaultCategoryRepository
 import com.example.googletasksclone.data.source.local.CategoryDataSource
 import com.example.googletasksclone.data.source.local.CategoryLocalDataSource
 import com.example.googletasksclone.data.source.local.ToDoDatabase
-import com.example.googletasksclone.data.source.DefaultCategoryRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

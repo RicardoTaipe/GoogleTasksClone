@@ -3,19 +3,22 @@ package com.example.googletasksclone
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.viewpager2.widget.ViewPager2
+import com.example.googletasksclone.addeditcategory.AddEditCategoryFragment
 import com.example.googletasksclone.addtask.AddTasksFragment
+import com.example.googletasksclone.data.Category
 import com.example.googletasksclone.databinding.ActivityMainBinding
+import com.example.googletasksclone.home.HomeViewModel
 import com.example.googletasksclone.home.TasksCollectionAdapter
 import com.example.googletasksclone.moreoptions.MoreOptionsEvent
 import com.example.googletasksclone.moreoptions.MoreOptionsFragment
-import com.example.googletasksclone.addeditcategory.AddEditCategoryFragment
 import com.example.googletasksclone.sort.SortFragment
-import com.example.googletasksclone.switchcategory.SwitchEvent
 import com.example.googletasksclone.switchcategory.SwitchCategoryFragment
+import com.example.googletasksclone.switchcategory.SwitchEvent
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,6 +28,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var tasksCollectionAdapter: TasksCollectionAdapter
+
+    private val viewModel by viewModels<HomeViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -42,29 +48,42 @@ class MainActivity : AppCompatActivity() {
         tasksCollectionAdapter = TasksCollectionAdapter(this).also {
             binding.contentMain.tasksLists.adapter = it
         }
-        renderTitlesInTabLayout()
         handleCustomTabAction()
         handleBottomBarActions()
         navigateToAddTasksFragment()
-        binding.contentMain.tasksLists.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        binding.contentMain.tasksLists.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 PreferencesMock.selectedList
             }
         })
+
+        viewModel.prepopulateDatabase()
+
+        viewModel.categories.observe(this) {
+            tasksCollectionAdapter.categories = it
+            renderTitlesInTabLayout()
+        }
     }
 
     private fun renderTitlesInTabLayout() {
         TabLayoutMediator(
-            binding.contentMain.tabLayout, binding.contentMain.tasksLists
+            binding.contentMain.tabLayout,
+            binding.contentMain.tasksLists
         ) { tab, position ->
+            val category = tasksCollectionAdapter.categories.getOrNull(position)
             when (position) {
                 0 -> {
                     tab.icon = ContextCompat.getDrawable(this, R.drawable.ic_star_24)
                 }
 
+                tasksCollectionAdapter.itemCount - 1 -> {
+                    tab.text = getString(R.string.new_list)
+                }
+
                 else -> {
-                    tab.text = "LIST ${(position)}"
+                    tab.text = category?.name
                 }
             }
         }.attach()
@@ -72,11 +91,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleCustomTabAction() {
         binding.contentMain.tabLayout.apply {
-            addCustomTab(getString(R.string.new_list))
             setOnCustomTabSelectedListener {
                 navigateToNewCategoryFragment()
-//                Snackbar.make(binding.root, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                    .setAction("Action", null).setAnchorView(binding.addTasksButton).show()
             }
         }
     }

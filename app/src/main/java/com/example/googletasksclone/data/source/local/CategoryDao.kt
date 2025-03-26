@@ -16,7 +16,7 @@ interface CategoryDao {
     @Query("SELECT * FROM category")
     suspend fun getAllCategories(): List<Category>
 
-    @Query("SELECT * FROM category")
+    @Query("SELECT * FROM category ORDER BY isFavorite DESC")
     fun observeAllCategories(): LiveData<List<Category>>
 
     @Query("SELECT * FROM category WHERE category_id = :categoryId")

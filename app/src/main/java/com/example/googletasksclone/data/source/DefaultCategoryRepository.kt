@@ -1,5 +1,6 @@
 package com.example.googletasksclone.data.source
 
+import androidx.lifecycle.LiveData
 import com.example.googletasksclone.data.Category
 import com.example.googletasksclone.data.source.local.CategoryDataSource
 import com.example.todoapp.data.Result
@@ -24,5 +25,9 @@ class DefaultCategoryRepository @Inject constructor(
 
     override suspend fun getCategory(categoryId: String) : Result<Category> {
         return categoryLocalDataSource.getCategory(categoryId)
+    }
+
+    override fun observeCategories(): LiveData<Result<List<Category>>> {
+        return categoryLocalDataSource.observeCategories()
     }
 }
