@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                PreferencesMock.selectedList
+                PreferencesMock.selectedList = viewModel.categories.value?.get(position)
             }
         })
 
@@ -146,7 +146,7 @@ class MainActivity : AppCompatActivity() {
             onListItemSelected = {
                 when (it) {
                     is SwitchEvent.ItemSelected -> {
-                        binding.contentMain.tasksLists.setCurrentItem(it.id.toInt(), false)
+                        binding.contentMain.tasksLists.setCurrentItem(it.position, false)
                         this.dismiss()
                     }
                 }

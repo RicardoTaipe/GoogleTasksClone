@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.googletasksclone.R
-import com.example.googletasksclone.data.ListModel
+import com.example.googletasksclone.data.Category
 import com.example.googletasksclone.databinding.ListItemLayoutBinding
 
 private const val FAVORITE_LIST_POSITION = 0
 
-class ListsAdapter : ListAdapter<ListModel, ListsAdapter.ViewHolder>(ListModelDiffCallback()) {
-    var onListItemSelected: ((item: ListModel) -> Unit)? = null
-    var selectedItem: ListModel? = null
+class ListsAdapter : ListAdapter<Category, ListsAdapter.ViewHolder>(ListModelDiffCallback()) {
+    var onListItemSelected: ((item: Category) -> Unit)? = null
+    var selectedItem: Category? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -28,14 +28,14 @@ class ListsAdapter : ListAdapter<ListModel, ListsAdapter.ViewHolder>(ListModelDi
 
     class ViewHolder private constructor(private val binding: ListItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: ListModel, onListItemSelected: ((item: ListModel) -> Unit)?, isSelected: Boolean) {
+        fun bind(item: Category, onListItemSelected: ((item: Category) -> Unit)?, isSelected: Boolean) {
             if (adapterPosition == FAVORITE_LIST_POSITION) {
                 binding.icon.isVisible = true
                 binding.icon.setImageResource(if (isSelected) R.drawable.ic_star_24 else R.drawable.ic_star_outline_24)
                 binding.title.setText(R.string.starred)
             } else {
                 binding.icon.isInvisible = !isSelected
-                binding.title.text = item.title
+                binding.title.text = item.name
             }
             binding.root.setOnClickListener {
                 onListItemSelected?.invoke(item)
@@ -53,12 +53,12 @@ class ListsAdapter : ListAdapter<ListModel, ListsAdapter.ViewHolder>(ListModelDi
 
 }
 
-class ListModelDiffCallback : DiffUtil.ItemCallback<ListModel>() {
-    override fun areItemsTheSame(oldItem: ListModel, newItem: ListModel): Boolean {
+class ListModelDiffCallback : DiffUtil.ItemCallback<Category>() {
+    override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: ListModel, newItem: ListModel): Boolean {
+    override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
         return oldItem == newItem
     }
 }

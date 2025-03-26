@@ -6,16 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import com.example.googletasksclone.PreferencesMock
 import com.example.googletasksclone.R
 import com.example.googletasksclone.databinding.FragmentSwitchListBinding
 import com.example.googletasksclone.utils.dpToPx
 import com.example.googletasksclone.addeditcategory.AddEditCategoryFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 
 sealed interface SwitchEvent {
-    data class ItemSelected(val id: String) : SwitchEvent
+    data class ItemSelected(val position: Int) : SwitchEvent
 }
 
+@AndroidEntryPoint
 class SwitchCategoryFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentSwitchListBinding? = null
     private val binding get() = _binding!!
@@ -45,8 +48,9 @@ class SwitchCategoryFragment : BottomSheetDialogFragment() {
     private fun initializeAdapter() {
         listsAdapter.onListItemSelected = { item ->
             viewModel.selectItem(item)
-            onListItemSelected?.invoke(SwitchEvent.ItemSelected(item.id))
-            listsAdapter.notifyItemChanged(listsAdapter.currentList.indexOfFirst { model -> model.id == item.id })
+            val indexPosition = listsAdapter.currentList.indexOfFirst { model -> model.id == item.id }
+            onListItemSelected?.invoke(SwitchEvent.ItemSelected(indexPosition))
+            listsAdapter.notifyItemChanged(indexPosition)
         }
 
         viewModel.selectedItem.observe(viewLifecycleOwner) {

@@ -1,7 +1,7 @@
 package com.example.googletasksclone
 
-import com.example.googletasksclone.data.ListModel
+import com.example.googletasksclone.data.Category
 
 object PreferencesMock {
-    var selectedList: ListModel? = null
+    var selectedList: Category? = null
 }
