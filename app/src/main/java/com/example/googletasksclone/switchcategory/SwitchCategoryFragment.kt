@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import com.example.googletasksclone.R
 import com.example.googletasksclone.databinding.FragmentSwitchListBinding
 import com.example.googletasksclone.utils.dpToPx
-import com.example.googletasksclone.newcategory.NewCategoryFragment
+import com.example.googletasksclone.addeditcategory.AddEditCategoryFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 sealed interface SwitchEvent {
@@ -75,7 +75,7 @@ class SwitchCategoryFragment : BottomSheetDialogFragment() {
 
     private fun navigateToNewListFragment() {
         dismiss()
-        NewCategoryFragment().show(parentFragmentManager, NewCategoryFragment.TAG)
+        AddEditCategoryFragment().show(parentFragmentManager, AddEditCategoryFragment.TAG)
     }
 
     override fun onDestroyView() {

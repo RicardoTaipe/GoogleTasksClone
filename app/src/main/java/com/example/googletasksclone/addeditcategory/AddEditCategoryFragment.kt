@@ -1,4 +1,4 @@
-package com.example.googletasksclone.newcategory
+package com.example.googletasksclone.addeditcategory
 
 import android.app.Dialog
 import android.os.Bundle
@@ -8,22 +8,41 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.FrameLayout
-import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.viewModels
+import com.example.googletasksclone.R
 import com.example.googletasksclone.databinding.FragmentNewListBinding
+import com.example.googletasksclone.utils.EventObserver
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-class NewCategoryFragment : BottomSheetDialogFragment() {
+@AndroidEntryPoint
+class AddEditCategoryFragment : BottomSheetDialogFragment() {
 
-    private var _binding: FragmentNewListBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentNewListBinding
+    private var categoryId: String = ""
+
+    private val viewModel by viewModels<AddEditCategoryViewModel>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            categoryId = it.getString(CATEGORY_ID).orEmpty()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentNewListBinding.inflate(inflater, container, false)
+        binding = FragmentNewListBinding.inflate(inflater, container, false).apply {
+            viewmodel = viewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
+        if (categoryId.isNotBlank()) {
+            binding.title.setText(R.string.rename_list)
+        }
         return binding.root
     }
 
@@ -32,12 +51,10 @@ class NewCategoryFragment : BottomSheetDialogFragment() {
         with(binding) {
             textField.editText?.apply {
                 requestFocus()
-                doOnTextChanged { text, _, _, _ ->
-                    doneButton.isEnabled = text.toString().trim().isNotBlank()
-                }
                 setOnEditorActionListener { _, actionId, _ ->
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
-                        handleDoneAction()
+                        if (text.isNotBlank()) handleDoneAction()
+                        clearFocus()
                         true // Return true if the event is consumed
                     } else {
                         false // Return false to allow other handlers to process the event
@@ -51,12 +68,15 @@ class NewCategoryFragment : BottomSheetDialogFragment() {
                 handleDoneAction()
             }
         }
+        viewModel.start(categoryId)
+
+        viewModel.categoryUpdatedEvent.observe(viewLifecycleOwner, EventObserver {
+            dismiss()
+        })
     }
 
     private fun handleDoneAction() {
-        //TODO save new list to db and add viewmodel
-        val title = binding.textField.editText?.text.toString().trim()
-        dismiss()
+        viewModel.saveCategory()
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -78,12 +98,16 @@ class NewCategoryFragment : BottomSheetDialogFragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     companion object {
-        val TAG: String = NewCategoryFragment::class.java.simpleName
+        val TAG: String = AddEditCategoryFragment::class.java.simpleName
+        private const val CATEGORY_ID = "CATEGORY_ID"
+
+        @JvmStatic
+        fun newInstance(categoryId: String) =
+            AddEditCategoryFragment().apply {
+                arguments = Bundle().apply {
+                    putString(CATEGORY_ID, categoryId)
+                }
+            }
     }
 }
