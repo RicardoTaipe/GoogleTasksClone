@@ -1,10 +1,9 @@
-package com.example.todoapp.data.source
+package com.example.googletasksclone.data.source
 
 import androidx.lifecycle.LiveData
 import com.example.googletasksclone.data.Task
-import com.example.googletasksclone.data.source.TasksRepository
-import com.example.todoapp.data.Result
-import com.example.todoapp.data.Result.Success
+import com.example.googletasksclone.data.Result
+import com.example.googletasksclone.data.Result.Success
 import kotlinx.coroutines.*
 
 class DefaultTasksRepository(

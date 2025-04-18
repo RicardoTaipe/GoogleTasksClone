@@ -3,7 +3,7 @@ package com.example.googletasksclone.data.source
 import androidx.lifecycle.LiveData
 import com.example.googletasksclone.data.Category
 import com.example.googletasksclone.data.source.local.CategoryDataSource
-import com.example.todoapp.data.Result
+import com.example.googletasksclone.data.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -23,11 +23,15 @@ class DefaultCategoryRepository @Inject constructor(
         }
     }
 
-    override suspend fun getCategory(categoryId: String) : Result<Category> {
+    override suspend fun getCategory(categoryId: String): Result<Category> {
         return categoryLocalDataSource.getCategory(categoryId)
     }
 
     override fun observeCategories(): LiveData<Result<List<Category>>> {
         return categoryLocalDataSource.observeCategories()
+    }
+
+    override suspend fun deleteCategory(categoryId: String) {
+        categoryLocalDataSource.deleteCategory(categoryId)
     }
 }

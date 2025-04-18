@@ -1,6 +1,6 @@
-package com.example.todoapp.data
+package com.example.googletasksclone.data
 
-import com.example.todoapp.data.Result.Success
+import com.example.googletasksclone.data.Result.Success
 
 sealed class Result<out R> {
 

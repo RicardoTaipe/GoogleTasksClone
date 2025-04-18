@@ -3,9 +3,9 @@ package com.example.googletasksclone.data.source.local
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.example.googletasksclone.data.Category
-import com.example.todoapp.data.Result
-import com.example.todoapp.data.Result.Success
-import com.example.todoapp.data.Result.Error
+import com.example.googletasksclone.data.Result
+import com.example.googletasksclone.data.Result.Success
+import com.example.googletasksclone.data.Result.Error
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -27,7 +27,7 @@ class CategoryLocalDataSource @Inject constructor(
                 if (category != null) {
                     return@withContext Success(category)
                 } else {
-                    return@withContext Error(Exception("Task not found!"))
+                    return@withContext Error(Exception("Category not found!"))
                 }
             } catch (e: Exception) {
                 return@withContext Error(e)
@@ -38,5 +38,9 @@ class CategoryLocalDataSource @Inject constructor(
         return categoryDao.observeAllCategories().map {
             Success(it)
         }
+    }
+
+    override suspend fun deleteCategory(categoryId: String) = withContext<Unit>(ioDispatcher) {
+        categoryDao.deleteCategoryById(categoryId)
     }
 }

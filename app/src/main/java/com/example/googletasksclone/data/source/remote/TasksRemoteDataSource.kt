@@ -4,11 +4,11 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
-import com.example.todoapp.data.Result
-import com.example.todoapp.data.Result.Error
-import com.example.todoapp.data.Result.Success
+import com.example.googletasksclone.data.Result
+import com.example.googletasksclone.data.Result.Error
+import com.example.googletasksclone.data.Result.Success
 import com.example.googletasksclone.data.Task
-import com.example.todoapp.data.source.TasksDataSource
+import com.example.googletasksclone.data.source.TasksDataSource
 import kotlinx.coroutines.delay
 
 object TasksRemoteDataSource : TasksDataSource {

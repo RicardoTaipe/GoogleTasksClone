@@ -1,8 +1,8 @@
-package com.example.todoapp.data.source
+package com.example.googletasksclone.data.source
 
 import androidx.lifecycle.LiveData
 import com.example.googletasksclone.data.Task
-import com.example.todoapp.data.Result
+import com.example.googletasksclone.data.Result
 
 interface TasksDataSource {
 
