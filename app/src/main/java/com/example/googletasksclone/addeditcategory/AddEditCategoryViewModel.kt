@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.googletasksclone.data.Category
 import com.example.googletasksclone.data.source.CategoryRepository
 import com.example.googletasksclone.utils.Event
-import com.example.todoapp.data.Result.Success
+import com.example.googletasksclone.data.Result.Success
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -40,7 +40,6 @@ class AddEditCategoryViewModel @Inject constructor(private val categoryRepositor
             // No need to populate, already have data.
             return
         }
-
         isNewCategory = false
         viewModelScope.launch {
             categoryRepository.getCategory(categoryId).let { result ->

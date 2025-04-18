@@ -16,9 +16,11 @@ import com.example.googletasksclone.home.HomeViewModel
 import com.example.googletasksclone.home.TasksCollectionAdapter
 import com.example.googletasksclone.moreoptions.MoreOptionsEvent
 import com.example.googletasksclone.moreoptions.MoreOptionsFragment
+import com.example.googletasksclone.moreoptions.MoreOptionsFragment.Companion.FAVORITE_KEY
 import com.example.googletasksclone.sort.SortFragment
 import com.example.googletasksclone.switchcategory.SwitchCategoryFragment
 import com.example.googletasksclone.switchcategory.SwitchEvent
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -63,23 +65,19 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.categories.observe(this) {
             tasksCollectionAdapter.categories = it
-            renderTitlesInTabLayout()
+            renderTitlesInTabLayout(it)
         }
     }
 
-    private fun renderTitlesInTabLayout() {
+    private fun renderTitlesInTabLayout(categories: List<Category>) {
         TabLayoutMediator(
             binding.contentMain.tabLayout,
             binding.contentMain.tasksLists
         ) { tab, position ->
-            val category = tasksCollectionAdapter.categories.getOrNull(position)
+            val category = categories.getOrNull(position)
             when (position) {
                 0 -> {
                     tab.icon = ContextCompat.getDrawable(this, R.drawable.ic_star_24)
-                }
-
-                tasksCollectionAdapter.itemCount - 1 -> {
-                    tab.text = getString(R.string.new_list)
                 }
 
                 else -> {
@@ -87,6 +85,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }.attach()
+        binding.contentMain.tabLayout.addCustomTab(getString(R.string.new_list))
     }
 
     private fun handleCustomTabAction() {
@@ -127,15 +126,27 @@ class MainActivity : AppCompatActivity() {
 
     private fun navigateToMoreOptionsDialog() {
         MoreOptionsFragment().apply {
+            arguments = Bundle().apply {
+                putString(MoreOptionsFragment.CATEGORY_ID, PreferencesMock.selectedList?.id)
+                putBoolean(FAVORITE_KEY, PreferencesMock.selectedList?.isFavorite ?: false)
+            }
             onListItemSelected = {
                 when (it) {
-                    MoreOptionsEvent.DeleteAllCompletedTasks -> {}
-                    MoreOptionsEvent.DeleteList -> {}
                     MoreOptionsEvent.RenameList -> {
-                        navigateToNewCategoryFragment("ux")
+                        navigateToNewCategoryFragment(PreferencesMock.selectedList?.id.orEmpty())
+                    }
+
+                    MoreOptionsEvent.DeleteList -> {
+                        Snackbar.make(binding.root, "List deleted", Snackbar.LENGTH_SHORT)
+                            .setAnchorView(binding.bottomAppBar).show()
+                    }
+
+
+                    MoreOptionsEvent.DeleteAllCompletedTasks -> {
+
                     }
                 }
-
+                this.dismiss()
             }
             show(supportFragmentManager, MoreOptionsFragment.TAG)
         }

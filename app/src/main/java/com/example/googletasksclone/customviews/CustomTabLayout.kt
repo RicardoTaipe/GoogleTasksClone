@@ -2,6 +2,7 @@ package com.example.googletasksclone.customviews
 
 import android.content.Context
 import android.util.AttributeSet
+import com.example.googletasksclone.R
 import com.google.android.material.tabs.TabLayout
 
 class CustomTabLayout @JvmOverloads constructor(
@@ -19,7 +20,9 @@ class CustomTabLayout @JvmOverloads constructor(
         if (tab != null && tab.position == tabCount - 1) {
             // If it's the last tab, do not update the indicator
             setScrollPosition(lastSelectedTabPosition, 0f, true, false)
-            onCustomTabSelected?.invoke()
+            if (tab.text == context.getString(R.string.new_list)) {
+                onCustomTabSelected?.invoke()
+            }
         } else {
             // save last selected tab and update the indicator
             lastSelectedTabPosition = tab?.position ?: lastSelectedTabPosition

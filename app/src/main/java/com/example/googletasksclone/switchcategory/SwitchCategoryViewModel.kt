@@ -7,7 +7,7 @@ import androidx.lifecycle.map
 import com.example.googletasksclone.PreferencesMock
 import com.example.googletasksclone.data.Category
 import com.example.googletasksclone.data.source.CategoryRepository
-import com.example.todoapp.data.Result.Success
+import com.example.googletasksclone.data.Result.Success
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
